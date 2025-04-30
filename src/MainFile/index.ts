@@ -7,5 +7,11 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementsByClassName("quiz-timer-form")[0];
 
   induceNavbar(navbarElement);
-  induceMainQuizForm(mainQuizFormElement);
+
+  let timer = 10;
+  let interval = setInterval(() => {
+    if (timer === 1) clearInterval(interval);
+    timer--;
+    induceMainQuizForm(mainQuizFormElement, 1, 1, timer);
+  }, 1000);
 });
