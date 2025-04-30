@@ -2,9 +2,9 @@ import { getQuestionBodyForPlayer } from "../DataHandle/dataHandle";
 import { player1Analysis, player2Analysis } from "../DataHandle/dataStore";
 
 export function induceMainQuizForm(mainElement, index, player) {
-  let questionBody = getQuestionBodyForPlayer(player, index);
+  let questionBody = getQuestionBodyForPlayer(player, index - 1);
   mainElement.innerHTML = `
-   
+    
 
 
         <div class="question">Question ${index}: ${questionBody.question}</div>
