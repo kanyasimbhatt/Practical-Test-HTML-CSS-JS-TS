@@ -10,9 +10,17 @@ export function induceAnalysisSection(element, player, timer) {
   );
 
   element.innerHTML = `
+    <div>
         <p>Player1 Score: ${player1Analysis.CorrectlyAnswered}</p>
+    </div>
+    <div>
         <p>Player2 Score: ${player2Analysis.CorrectlyAnswered}</p>
+    </div>
+    <div>
         <p>Player Turn: Player${player}</p>
+    </div>
+    <div>
         <p>Timer: ${timer}</p>
+    </div>
     `;
 }

@@ -12,6 +12,8 @@
 body {
   margin: 0;
   height: 100vh;
+  font-weight: 500;
+  word-spacing: 10px;
 }
 
 .navbar-logo-div {
@@ -41,15 +43,21 @@ body {
   padding: 30px 30px 0 30px;
   display: flex;
   justify-content: space-between;
+  background-color: rgb(52, 182, 182);
+  padding-top: 0;
 }
 
 .quiz-form-wrapper {
   height: calc(100vh - 60px - 50px - 150px);
-
+  margin-left: 100px;
   display: flex;
   flex-direction: column;
   gap: 30px;
   padding: 40px;
+}
+
+.option-label-wrapper {
+  margin-left: 30px;
 }
 
 .form-element {
@@ -111,7 +119,7 @@ body {
   opacity: 0.7;
 }
 
-@media screen and (max-width: 600px) {
+/* @media screen and (max-width: 600px) {
   .quiz-player-turn-stats-timer {
     flex-direction: column;
     justify-content: center;
@@ -123,4 +131,4 @@ body {
   .analysis-section-winner-play-again {
     height: calc(100vh - 30px - 100px - 400px - 120px);
   }
-}
+} */
