@@ -1,6 +1,8 @@
 type PlayerAnalysis = {
   questionsPassed: number;
   CorrectlyAnswered: number;
+  unansweredQuestions: number;
+  incorrectQuestions: number;
 };
 
 type QuizBody = {
@@ -219,9 +221,13 @@ export const player2: Array<QuizBody> = [
 export let player1Analysis: PlayerAnalysis = {
   questionsPassed: 0,
   CorrectlyAnswered: 0,
+  unansweredQuestions: 0,
+  incorrectQuestions: 0,
 };
 
 export let player2Analysis: PlayerAnalysis = {
   questionsPassed: 0,
   CorrectlyAnswered: 0,
+  unansweredQuestions: 0,
+  incorrectQuestions: 0,
 };
