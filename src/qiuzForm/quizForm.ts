@@ -9,23 +9,23 @@ export function induceMainQuizForm(mainElement, index, player) {
         <h3 class="question">Question ${index}: ${questionBody.question}</h3>
 
             <div class = "option-label-wrapper">
-                <input type="radio" id = "option1" name = "quiz-option" value="${questionBody.correct_answer}"/>
-                <label for = "option1"> ${questionBody.correct_answer} </label>
+                <input type="radio" id = "option1" name = "quiz-option" value="${questionBody.options[0]}"/>
+                <label for = "option1"> ${questionBody.options[0]} </label>
             </div>
 
             <div class = "option-label-wrapper">
-                <input type="radio" id = "option2" name = "quiz-option" value="${questionBody.incorrect_answers[0]}" />
-                <label for = "option2"> ${questionBody.incorrect_answers[0]} </label>
+                <input type="radio" id = "option2" name = "quiz-option" value="${questionBody.options[1]}" />
+                <label for = "option2"> ${questionBody.options[1]} </label>
             </div>
 
             <div class = "option-label-wrapper">
-                <input type="radio" id = "option3" name = "quiz-option" value="${questionBody.incorrect_answers[1]}"/>
-                <label for = "option3"> ${questionBody.incorrect_answers[1]} </label>
+                <input type="radio" id = "option3" name = "quiz-option" value="${questionBody.options[2]}"/>
+                <label for = "option3"> ${questionBody.options[2]} </label>
             </div>
 
             <div class = "option-label-wrapper">
-                <input type="radio" name = "quiz-option" id = "option4" value="${questionBody.incorrect_answers[2]}"/>
-                <label for = "option4"> ${questionBody.incorrect_answers[2]} </label>
+                <input type="radio" name = "quiz-option" id = "option4" value="${questionBody.options[3]}"/>
+                <label for = "option4"> ${questionBody.options[3]} </label>
             </div>
             </form>
   
