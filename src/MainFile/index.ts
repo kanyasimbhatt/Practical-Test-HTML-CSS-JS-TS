@@ -1,6 +1,7 @@
 import { induceNavbar } from "../Navbar/navbar";
 import { induceMainQuizForm } from "../qiuzForm/quizForm";
 import { induceAnalysisSection } from "../AnalysisSection/analysisSection";
+import { induceAnalysisPage } from "../finalAnalysispage/analysisPage";
 import { player1Analysis, player2Analysis } from "../DataHandle/dataStore";
 import { player1, player2 } from "../DataHandle/dataStore";
 
@@ -36,14 +37,59 @@ function handleDataDisplay(analysisSectionElement, mainQuizFormElement) {
       handleSetTimeOutCode(i, mainQuizFormElement, analysisSectionElement);
     }, 10000 * i);
   }
+
+  setTimeout(() => {
+    showAnalysisPage();
+    const playAgainButtonElement = document.getElementsByClassName(
+      "play-again-button"
+    )[0] as HTMLButtonElement;
+
+    playAgainButtonElement.addEventListener("click", () => {
+      handlePlayAgain();
+    });
+  }, 200000);
+}
+
+function showAnalysisPage() {
+  const questionsElement = document.getElementsByClassName(
+    "quiz-timer-form"
+  )[0] as HTMLDivElement;
+  const analysisElement = document.getElementsByClassName(
+    "analysis section"
+  )[0] as HTMLDivElement;
+  questionsElement.style.display = "none";
+  induceAnalysisPage(analysisElement);
 }
 
 function initEventListeners() {
-  const formElement = document.getElementsByClassName("form-element")[0];
+  const formElement = document.getElementsByClassName(
+    "form-element"
+  )[0] as HTMLDivElement;
 
   formElement.addEventListener("click", (e: Event) => {
     handleOptionSelect(e);
   });
+}
+
+function handlePlayAgain() {
+  const analysisElement = document.getElementsByClassName(
+    "analysis section"
+  )[0] as HTMLDivElement;
+  const questionsElement = document.getElementsByClassName(
+    "quiz-timer-form"
+  )[0] as HTMLDivElement;
+  const mainQuizFormElement =
+    document.getElementsByClassName("quiz-form-wrapper")[0];
+  const analysisSectionElement = document.getElementsByClassName(
+    "quiz-player-turn-stats-timer"
+  )[0];
+
+  analysisElement.style.display = "none";
+  questionsElement.style.display = "block";
+  induceMainQuizForm(mainQuizFormElement, 1, 1);
+
+  handleDataDisplay(analysisSectionElement, mainQuizFormElement);
+  initEventListeners();
 }
 
 function handleOptionSelect(e: Event) {
