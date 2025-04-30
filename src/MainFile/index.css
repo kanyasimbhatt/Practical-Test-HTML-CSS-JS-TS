@@ -98,8 +98,6 @@ body {
   justify-content: center;
 }
 
-.save-progress,
-.resume-progress,
 .play-again-button {
   border: none;
   background-color: rgb(52, 182, 182);
@@ -109,15 +107,8 @@ body {
   font-weight: bold;
 }
 
-.save-progress:hover,
-.resume-progress:hover,
 .play-again-button:hover {
   opacity: 0.7;
-}
-
-.navbar-buttons {
-  display: flex;
-  gap: 30px;
 }
 
 @media screen and (max-width: 600px) {

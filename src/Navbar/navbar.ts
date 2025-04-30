@@ -5,9 +5,6 @@ export function induceNavbar(navbarElement) {
   
   <h1 class = "navbar-title">Quizzy</h1>
   </div>
-  <div class = 'navbar-buttons'>
-    <button class = 'save-progress'>Save Progress </button>
-    <button class = 'resume-progress'>Resume Progress</button>
-  </div>
+
     `;
 }

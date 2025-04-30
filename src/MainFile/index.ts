@@ -38,30 +38,24 @@ function handleDataDisplay(analysisSectionElement, mainQuizFormElement) {
 
   setTimeout(() => {
     showAnalysisPage();
-    const playAgainButtonElement = document.getElementsByClassName(
-      "play-again-button"
-    )[0] as HTMLButtonElement;
-    playAgainButtonElement.addEventListener("click", () => {
-      handlePlayAgain();
-    });
   }, 200000);
 }
 
 function showAnalysisPage() {
+  const playAgainButtonElement = document.getElementsByClassName(
+    "play-again-button"
+  )[0] as HTMLButtonElement;
   commonHTMLElements.questionsElement.style.display = "none";
   induceAnalysisPage(commonHTMLElements.analysisElement);
+  playAgainButtonElement.addEventListener("click", () => {
+    handlePlayAgain();
+  });
 }
 
 function initEventListeners() {
   const formElement = document.getElementsByClassName(
     "form-element"
   )[0] as HTMLDivElement;
-  const saveProgressElement =
-    document.getElementsByClassName("save-progress")[0];
-
-  saveProgressElement.addEventListener("click", () => {
-    flag = true;
-  });
 
   formElement.addEventListener("click", (e: Event) => {
     handleOptionSelect(e);
