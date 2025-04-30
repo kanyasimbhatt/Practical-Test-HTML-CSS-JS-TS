@@ -1,0 +1,22 @@
+.navbar-div {
+  display: flex;
+  flex: 1;
+  gap: 15px;
+  background-color: black;
+  height: 60px;
+  padding: 10px;
+  align-items: center;
+}
+
+body {
+  margin: 0;
+}
+
+.navbar-logo {
+  height: 50px;
+  width: 50px;
+}
+
+.navbar-title {
+  color: white;
+}
