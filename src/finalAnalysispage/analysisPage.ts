@@ -7,6 +7,12 @@ export function induceAnalysisPage(element: HTMLDivElement) {
   let player2Analysis: PlayerAnalysis = JSON.parse(
     localStorage.getItem("player2Analysis") as string
   );
+  let winner =
+    player1Analysis.CorrectlyAnswered > player2Analysis.CorrectlyAnswered
+      ? "Player1"
+      : player1Analysis.CorrectlyAnswered < player2Analysis.CorrectlyAnswered
+      ? "Player2"
+      : "Nobody";
 
   element.innerHTML = `
     <div class="analysis-section-heading">
@@ -45,7 +51,7 @@ export function induceAnalysisPage(element: HTMLDivElement) {
       </div>
 
       <div class="analysis-section-winner-play-again">
-        <p>Winner:</p>
+        <p>Winner: ${winner}</p>
         <button class="play-again-button">Play Again</button>
       </div>
     `;

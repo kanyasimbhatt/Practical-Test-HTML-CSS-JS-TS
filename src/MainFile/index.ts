@@ -4,24 +4,22 @@ import { induceAnalysisSection } from "../AnalysisSection/analysisSection";
 import { induceAnalysisPage } from "../finalAnalysispage/analysisPage";
 import { player1Analysis, player2Analysis } from "../DataHandle/dataStore";
 import { player1, player2 } from "../DataHandle/dataStore";
-
+import { commonHTMLElements } from "../CommonElements/commonElements";
 let selectedAnswerPlayer1 = "";
 let selectedAnswerPlayer2 = "";
 let index = 0;
 let questionPlayer1 = 2;
 let questionPlayer2 = 1;
+let flag = false;
+let setTimer;
+
 document.addEventListener("DOMContentLoaded", () => {
-  const navbarElement = document.getElementsByClassName("navbar-div")[0];
-  const mainQuizFormElement =
-    document.getElementsByClassName("quiz-form-wrapper")[0];
-  const analysisSectionElement = document.getElementsByClassName(
-    "quiz-player-turn-stats-timer"
-  )[0];
-
-  induceNavbar(navbarElement);
-  induceMainQuizForm(mainQuizFormElement, 1, 1);
-
-  handleDataDisplay(analysisSectionElement, mainQuizFormElement);
+  induceNavbar(commonHTMLElements.navbarElement);
+  induceMainQuizForm(commonHTMLElements.mainQuizFormElement, 1, 1);
+  handleDataDisplay(
+    commonHTMLElements.analysisSectionElement,
+    commonHTMLElements.mainQuizFormElement
+  );
   initEventListeners();
 });
 
@@ -33,7 +31,7 @@ function handleDataDisplay(analysisSectionElement, mainQuizFormElement) {
     induceAnalysisSection(analysisSectionElement, 1, timer);
   }, 1000);
   for (let i = 1; i < 20; i++) {
-    setTimeout(() => {
+    setTimer = setTimeout(() => {
       handleSetTimeOutCode(i, mainQuizFormElement, analysisSectionElement);
     }, 10000 * i);
   }
@@ -43,7 +41,6 @@ function handleDataDisplay(analysisSectionElement, mainQuizFormElement) {
     const playAgainButtonElement = document.getElementsByClassName(
       "play-again-button"
     )[0] as HTMLButtonElement;
-
     playAgainButtonElement.addEventListener("click", () => {
       handlePlayAgain();
     });
@@ -51,20 +48,20 @@ function handleDataDisplay(analysisSectionElement, mainQuizFormElement) {
 }
 
 function showAnalysisPage() {
-  const questionsElement = document.getElementsByClassName(
-    "quiz-timer-form"
-  )[0] as HTMLDivElement;
-  const analysisElement = document.getElementsByClassName(
-    "analysis section"
-  )[0] as HTMLDivElement;
-  questionsElement.style.display = "none";
-  induceAnalysisPage(analysisElement);
+  commonHTMLElements.questionsElement.style.display = "none";
+  induceAnalysisPage(commonHTMLElements.analysisElement);
 }
 
 function initEventListeners() {
   const formElement = document.getElementsByClassName(
     "form-element"
   )[0] as HTMLDivElement;
+  const saveProgressElement =
+    document.getElementsByClassName("save-progress")[0];
+
+  saveProgressElement.addEventListener("click", () => {
+    flag = true;
+  });
 
   formElement.addEventListener("click", (e: Event) => {
     handleOptionSelect(e);
@@ -72,23 +69,14 @@ function initEventListeners() {
 }
 
 function handlePlayAgain() {
-  const analysisElement = document.getElementsByClassName(
-    "analysis section"
-  )[0] as HTMLDivElement;
-  const questionsElement = document.getElementsByClassName(
-    "quiz-timer-form"
-  )[0] as HTMLDivElement;
-  const mainQuizFormElement =
-    document.getElementsByClassName("quiz-form-wrapper")[0];
-  const analysisSectionElement = document.getElementsByClassName(
-    "quiz-player-turn-stats-timer"
-  )[0];
+  commonHTMLElements.analysisElement.style.display = "none";
+  commonHTMLElements.questionsElement.style.display = "block";
+  induceMainQuizForm(commonHTMLElements.mainQuizFormElement, 1, 1);
 
-  analysisElement.style.display = "none";
-  questionsElement.style.display = "block";
-  induceMainQuizForm(mainQuizFormElement, 1, 1);
-
-  handleDataDisplay(analysisSectionElement, mainQuizFormElement);
+  handleDataDisplay(
+    commonHTMLElements.analysisSectionElement,
+    commonHTMLElements.mainQuizFormElement
+  );
   initEventListeners();
 }
 
@@ -122,6 +110,20 @@ function handleSetTimeOutCode(
   initEventListeners();
   let timer = 10;
   let interval = setInterval(() => {
+    if (flag) {
+      let obj = {
+        player: i % 2 === 0 ? 1 : 2,
+        timer: timer,
+        questionPlayer1: questionPlayer1,
+        questionPlayer2: questionPlayer2,
+        player1Score: player1Analysis.CorrectlyAnswered,
+        Player2Score: player2Analysis.CorrectlyAnswered,
+      };
+
+      localStorage.setItem("save-progress-data", JSON.stringify(obj));
+      clearTimeout(setTimer);
+      showAnalysisPage();
+    }
     if (timer === 1) clearInterval(interval);
     timer--;
 
