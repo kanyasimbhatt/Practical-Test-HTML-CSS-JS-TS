@@ -1,4 +1,4 @@
-type PlayerAnalysis = {
+export type PlayerAnalysis = {
   questionsPassed: number;
   CorrectlyAnswered: number;
   unansweredQuestions: number;
@@ -224,10 +224,12 @@ export let player1Analysis: PlayerAnalysis = {
   unansweredQuestions: 0,
   incorrectQuestions: 0,
 };
-
 export let player2Analysis: PlayerAnalysis = {
   questionsPassed: 0,
   CorrectlyAnswered: 0,
   unansweredQuestions: 0,
   incorrectQuestions: 0,
 };
+
+localStorage.setItem("player1Analysis", JSON.stringify(player1Analysis));
+localStorage.setItem("player2Analysis", JSON.stringify(player2Analysis));

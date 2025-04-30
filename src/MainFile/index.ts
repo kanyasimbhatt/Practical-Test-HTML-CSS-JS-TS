@@ -1,7 +1,14 @@
 import { induceNavbar } from "../Navbar/navbar";
 import { induceMainQuizForm } from "../qiuzForm/quizForm";
 import { induceAnalysisSection } from "../AnalysisSection/analysisSection";
+import { player1Analysis, player2Analysis } from "../DataHandle/dataStore";
+import { player1, player2 } from "../DataHandle/dataStore";
 
+let selectedAnswerPlayer1 = "";
+let selectedAnswerPlayer2 = "";
+let index = 0;
+let questionPlayer1 = 2;
+let questionPlayer2 = 1;
 document.addEventListener("DOMContentLoaded", () => {
   const navbarElement = document.getElementsByClassName("navbar-div")[0];
   const mainQuizFormElement =
@@ -14,12 +21,10 @@ document.addEventListener("DOMContentLoaded", () => {
   induceMainQuizForm(mainQuizFormElement, 1, 1);
 
   handleDataDisplay(analysisSectionElement, mainQuizFormElement);
+  initEventListeners();
 });
 
 function handleDataDisplay(analysisSectionElement, mainQuizFormElement) {
-  let questionPlayer1 = 2;
-  let questionPlayer2 = 1;
-
   let timer = 10;
   let interval = setInterval(() => {
     if (timer === 1) clearInterval(interval);
@@ -28,22 +33,81 @@ function handleDataDisplay(analysisSectionElement, mainQuizFormElement) {
   }, 1000);
   for (let i = 1; i < 20; i++) {
     setTimeout(() => {
-      if (i % 2 === 0) {
-        induceMainQuizForm(mainQuizFormElement, questionPlayer1, 1);
-        questionPlayer1++;
-      } else {
-        induceMainQuizForm(mainQuizFormElement, questionPlayer2, 2);
-        questionPlayer2++;
-      }
-      let timer = 10;
-      let interval = setInterval(() => {
-        if (timer === 1) clearInterval(interval);
-        timer--;
-
-        i % 2 === 0
-          ? induceAnalysisSection(analysisSectionElement, 1, timer)
-          : induceAnalysisSection(analysisSectionElement, 2, timer);
-      }, 1000);
+      handleSetTimeOutCode(i, mainQuizFormElement, analysisSectionElement);
     }, 10000 * i);
   }
+}
+
+function initEventListeners() {
+  const formElement = document.getElementsByClassName("form-element")[0];
+
+  formElement.addEventListener("click", (e: Event) => {
+    handleOptionSelect(e);
+  });
+}
+
+function handleOptionSelect(e: Event) {
+  if (index % 2 === 0 && "value" in e.target!) {
+    selectedAnswerPlayer1 = e.target.value as string;
+  } else {
+    if ("value" in e.target!) {
+      selectedAnswerPlayer2 = e.target.value as string;
+    }
+  }
+}
+
+function handleSetTimeOutCode(
+  i: number,
+  mainQuizFormElement: HTMLDivElement,
+  analysisSectionElement: HTMLDivElement
+) {
+  index = i;
+  if (i % 2 === 0) {
+    induceMainQuizForm(mainQuizFormElement, questionPlayer1, 1);
+    questionPlayer1++;
+    handleAnalysisObjectUpdationPlayer2(questionPlayer2);
+    selectedAnswerPlayer2 = "";
+  } else {
+    induceMainQuizForm(mainQuizFormElement, questionPlayer2, 2);
+    questionPlayer2++;
+    handleAnalysisObjectUpdationPlayer1(questionPlayer1);
+    selectedAnswerPlayer1 = "";
+  }
+  initEventListeners();
+  let timer = 10;
+  let interval = setInterval(() => {
+    if (timer === 1) clearInterval(interval);
+    timer--;
+
+    i % 2 === 0
+      ? induceAnalysisSection(analysisSectionElement, 1, timer)
+      : induceAnalysisSection(analysisSectionElement, 2, timer);
+  }, 1000);
+}
+
+function handleAnalysisObjectUpdationPlayer1(questionPlayer1: number) {
+  if (selectedAnswerPlayer1 === "") {
+    player1Analysis.unansweredQuestions += 1;
+  } else if (
+    selectedAnswerPlayer1 === player1[questionPlayer1 - 2].correct_answer
+  ) {
+    player1Analysis.CorrectlyAnswered += 1;
+  } else {
+    player1Analysis.incorrectQuestions += 1;
+  }
+  localStorage.setItem("player1Analysis", JSON.stringify(player1Analysis));
+}
+
+function handleAnalysisObjectUpdationPlayer2(questionPlayer2: number) {
+  if (selectedAnswerPlayer2 === "") {
+    player2Analysis.unansweredQuestions += 1;
+  } else if (
+    selectedAnswerPlayer2 === player2[questionPlayer2 - 2].correct_answer
+  ) {
+    player2Analysis.CorrectlyAnswered += 1;
+  } else {
+    player2Analysis.incorrectQuestions += 1;
+  }
+
+  localStorage.setItem("player2Analysis", JSON.stringify(player2Analysis));
 }
